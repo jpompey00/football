@@ -12,6 +12,7 @@ let teams = [
 const teamDropdown = document.getElementById("teamsDropdown");
 const submitButton = document.getElementById("submitButton");
 const outputTextBox = document.getElementById("outputTextBox");
+const outputImage = document.getElementById("outputImage");
 
 
 window.onload = function(){
@@ -24,6 +25,8 @@ window.onload = function(){
 
 
 function loadTeams(){
+    let blankOption = new Option("Select a Team", "");
+    teamDropdown.append(blankOption);
     for(let team of teams){
         let theOption = new Option(team.name, team.code);
         teamDropdown.append(theOption);
@@ -32,10 +35,18 @@ function loadTeams(){
 
 function onSubmitButtonClicked(){
     //console.log(teamDropdown.value);
-    for(let team of teams){
-        if(teamDropdown.value == team.code){
-            outputTextBox.textContent = 
-            `Team: ${team.name}, Code: ${team.code}, Plays; ${team.plays}`;
+    if(teamDropdown.value == ""){
+        outputTextBox.innerHTML = "";
+        outputImage.setAttribute("src","");
+    } else {
+
+        for(let team of teams){
+            if(teamDropdown.value == team.code){
+                outputTextBox.innerHTML = 
+                `You selected ${team.name} (${team.code}) who play in ${team.plays}`;
+                outputImage.setAttribute("src", `images/${team.code}.png`);
+            }
         }
     }
+
 }
